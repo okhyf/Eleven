@@ -1,0 +1,49 @@
+{% extends "article_base.html" %}
+
+{% block title %} 发布文字 {% endblock %}
+
+
+{% block article %}
+
+<form role="form" action="" method="post" xmlns="http://www.w3.org/1999/html">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_caption">Title: </label>
+        {% if form.caption.errors %}
+        <div class="alert alert-error">
+            {{ form.caption.errors }}
+        </div>
+        {% endif %}
+        <input type="text" class="form-control" id="id_caption" name="caption" placeholder="标题" value="{{ article.caption }}">
+    </div>
+    <div class="form-group">
+        <label for="id_content">Content: </label>
+        {% if form.content.errors %}
+        <div class="alert alert-error">
+            {{ form.content.errors }}
+        </div>
+        {% endif %}
+        <textarea class="form-control" rows="5" id="id_content" name="content">{{ article.content }}</textarea>
+    </div>
+    <div class="input-group">
+        <div class="input-group-addon">tags</div>
+        {% if tag.tag_name.errors %}
+        <div class="alert alert-error">
+            {{ tag.tag_name.errors }}
+        </div>
+        {% endif %}
+        <input type="text" colum class="form-control" id="id_tag" name="tag_name" placeholder="Tag" value="{{ tag }}">
+
+        <div class="input-group-addon">classification</div>
+        {% if classification.classification_name.errors %}
+        <div class="alert alert-error">
+            {{ classification.classification_name.errors }}
+        </div>
+        {% endif %}
+        <input type="text" colum class="form-control" id="id_classification" name="classification_name" placeholder="Classification" value="{{ article.classification }}">
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">save and add</button>
+    <br/>
+</form>
+{% endblock %}

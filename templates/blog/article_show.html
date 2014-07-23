@@ -1,0 +1,136 @@
+{% extends "article_base.html" %}
+{% load comments %}
+{% load gravatar %}
+{% block title %} {{ article.caption }} {% endblock %}
+{% block script %}
+<script type="text/javascript" charset="utf-8">
+    function bindPostCommentHandler() {
+        $('#comment_form form input.submit-preview').remove();
+        $('#comment_form form').submit(function() {
+            $.ajax({
+                type: "POST",
+                data: $('#comment_form form').serialize(),
+                url: "{% comment_form_target %}",
+                cache: false,
+                dataType: "html",
+                success: function(html, textStatus) {
+                    $('#cmt').replaceWith(html);
+                    $('#comment_form form')[0].reset();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#comment_form form').replaceWith('Your comment was unable to be posted at this time.  We apologise for the inconvenience.');
+                }
+            });
+            return false;
+        });
+    }
+
+    $(document).ready(function() {
+        bindPostCommentHandler();
+    });
+</script>
+{% endblock %}
+
+{% block article %}
+<div class="content">
+    <article class="content-main">
+    {% block article_title %}
+        <h2>{{ article.caption }}</h2>
+    {% endblock %}
+    <p class="text-muted">
+        <i class="glyphicon glyphicon-user"></i><small> {{ article.author }}</small>
+        <i class="glyphicon glyphicon-time"></i><small> {{ article.publish_time }}</small>
+    </p>
+
+    <section>
+        <div class="wrapper row">
+            <div class="content-main col-md-10" style="word-wrap: break-word; word-break: normal;">
+                {% block article_content %}
+                {{ article.content }}
+                {% endblock %}
+            </div>
+            <div class="content-secondary">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="row-fluid">
+            <div class="col-md-3">
+                <p class="text-muted">
+                    <i class="glyphicon glyphicon-list-alt"></i> <small>{{ article.classification }}</small>
+                    <i class=" glyphicon glyphicon-tag"></i>
+                    {% for tag in article.tags.all %}
+                         <small> {{ tag }} </small>
+                    {% endfor %}
+                </p>  
+            </div>
+            <div class="col-md-1 col-md-offset-8">
+                {# <a href="{% url 'delarticle' article.id %}" title="delete"><i class="glyphicon glyphicon-trash"></i></a> #}
+                {# <a href="{% url 'updatearticle' article.id %}" title="edit"><i class="glyphicon glyphicon-pencil"></i></a> #}
+                <a href="#cmt" title="comment"><i class="glyphicon glyphicon-comment"></i></a>
+            </div>
+        </div>
+        <hr>
+    </section>
+
+    </article>
+    <hr>
+</div>    
+{% endblock %}
+
+{% block comments %}
+<article id="cmt">
+    {% get_comment_count for article as comment_count %}
+        <h4 class="text-muted">{{ comment_count }} Comments</h4>
+        <hr class="soften">
+    {% get_comment_list for article as article_com %}
+    {% for comment in article_com %}
+        <div class="container-fluid none-padding" style="word-wrap: break-word; word-break: normal;">
+            <img class="gravatar" src="{% gravatar_url comment.user_email %}">
+            <p class="text-muted"><small>{{ comment.name }}</small> <small>{{ comment.submit_date|date:"F j Y" }}</small></p>
+            {{ comment.comment }}
+        </div>
+        <hr class="soften">
+    {% endfor %}
+</article>
+
+<article >
+    {% get_comment_form for article as article_form %}
+        <div id="comment_form">
+            <h4 class="text-muted">New Comments</h4>
+            <form class="form-inline"  role="form" action="{% comment_form_target %}" method="post">
+                <fieldset>
+                {% csrf_token %}
+                {{ article_form.object_pk }}
+                {{ article_form.content_type }}
+                {{ article_form.timestamp }}
+                {{ article_form.site }}
+                {{ article_form.submit_date }}
+                {{ article_form.security_hash }}
+                <div class="form-group">
+                    <label class="control-label" for="id_name">name: </label>
+                    <input type="text" id="id_name" class="form-control" name="name" placeholder="please enter name" required="required"><br/>
+                    <label class="control-label" for="id_email">email: </label>
+                    <input class="form-control" id="id_email" type="email" name="email" placeholder="please enter email" required="required">
+                    <label class="control-label" for="id_comment">comment: </label>
+                    <textarea class="form-control comment" id="id_comment" rows="5" name="comment" placeholder="please enter comment" required="required"></textarea>
+                </div>
+                <p style="display:none;">
+                    <label for="id_honeypot">如果你在该字段中输入任何内容，那么你的评论就会被视为垃圾评论。</label>
+                    <input type="text" name="honeypot" id="id_honeypot">
+                </p>
+
+                <br/><br/>
+                <div class="form-actions">
+                    <input class="btn btn-info" type="submit" name="submit" value="Post">
+                    {# <input class="btn btn-info" type="submit" name="preview" value="Preview"> #}
+                    {# <input type='hidden' name='next' value='{% url 'detailarticle' article.id %}'/> #}
+                    <input type='hidden' name='next' value='{% url 'showcomment' article.id %}'/>
+                </div>
+                </fieldset>
+            </form>
+            <br/>
+        </div>
+</article>
+{% endblock %}

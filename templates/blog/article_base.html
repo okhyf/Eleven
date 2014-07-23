@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% block menu %}
+    <div class="navbar navbar-inverse navbar-fixed-top"  role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'articlelist' %}">Floating Life</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active divider-vertical"><a href="{% url 'articlelist' %}">home</a></li>
+                    <li><a href="#">about</a></li>
+                    <li><a href="#">contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+{% endblock %}
+
+{% block aside %}
+    {# <a class="btn" href="{% url 'addarticle' %}"><i class="glyphicon glyphicon-plus"></i> add new blog</a> #}<br/>
+    {% block tags %}
+        <div class="well">
+            <i class="glyphicon glyphicon-tags"></i>
+            {% for tag in tags %}
+                <span class="label"><a href="{% url 'filtrarticle' tag.id %}">{{ tag }}</a></span>
+            {% endfor %}
+        </div>
+    {% endblock %}
+
+    {% block classifications %}
+        <div class="well">
+            <i class="glyphicon glyphicon-list-alt"></i>
+            {% for classification in classifications %}
+                <span class="label"><a href="{% url 'filtrarticle' classification.id %}">{{ classification }}</a></span>
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endblock %}
