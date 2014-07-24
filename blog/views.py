@@ -27,12 +27,19 @@ def article_show(request, id=''):
         raise Http404
     return render_to_response("article_show.html", {"article": article, "tags": tags, "classifications": classifications}, context_instance=RequestContext(request))
 
-def article_filter(request, id=''):
+def article_tag_filter(request, id=''):
     tags = Tag.objects.all()
     tag = Tag.objects.get(id=id)
     articles = tag.article_set.all()
-    return render_to_response("article_filter.html",
+    return render_to_response("article_tag_filter.html",
         {"articles": articles, "tag": tag, "tags": tags})
+
+def article_class_filter(request, id=''):
+    classifications = Classification.objects.all()
+    classification = Classification.objects.get(id=id)
+    articles = classification.article_set.all()
+    return render_to_response("article_class_filter.html",
+        {"articles": articles, "classification": classification, "classifications": classifications})
 
 def article_add(request):
     if request.method == 'POST':

@@ -33,7 +33,7 @@
         <div class="well">
             <i class="glyphicon glyphicon-tags"></i>
             {% for tag in tags %}
-                <span class="label"><a href="{% url 'filtrarticle' tag.id %}">{{ tag }}</a></span>
+                <span class="label"><a href="{% url 'filtrarticletag' tag.id %}">{{ tag }}</a></span>
             {% endfor %}
         </div>
     {% endblock %}
@@ -42,7 +42,7 @@
         <div class="well">
             <i class="glyphicon glyphicon-list-alt"></i>
             {% for classification in classifications %}
-                <span class="label"><a href="{% url 'filtrarticle' classification.id %}">{{ classification }}</a></span>
+                <span class="label"><a href="{% url 'filtrarticleclass' classification.id %}">{{ classification }}</a></span>
             {% endfor %}
         </div>
     {% endblock %}
