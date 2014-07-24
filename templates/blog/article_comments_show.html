@@ -1,4 +1,5 @@
 {% load comments %}
+{% load gravatar %}
 <article id="cmt">
     {% get_comment_count for article as comment_count %}
         <h4 class="text-muted">{{ comment_count }} Comments</h4>
@@ -6,6 +7,7 @@
     {% get_comment_list for article as article_com %}
     {% for comment in article_com %}
         <div class="container-fluid none-padding" style="word-wrap: break-word; word-break: normal;">
+            <img class="gravatar" src="{% gravatar_url comment.user_email %}">
             <p class="text-muted"><small>{{ comment.name }}</small> <small>{{ comment.submit_date|date:"F j Y" }}</small></p>
             {{ comment.comment }}
         </div>
