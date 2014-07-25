@@ -32,24 +32,22 @@
 {% endblock %}
 
 {% block article %}
-<div class="content">
+<div class="content" style="background: none repeat scroll 0% 0% #FFF;box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.1);padding: 30px;">
     <article class="content-main">
     {% block article_title %}
-        <h2>{{ article.caption }}</h2>
+        <h2 style="padding: 0px 0px 40px">{{ article.caption }}</h2>
     {% endblock %}
     <p class="text-muted">
         <i class="glyphicon glyphicon-user"></i><small> {{ article.author }}</small>
         <i class="glyphicon glyphicon-time"></i><small> {{ article.publish_time }}</small>
     </p>
 
-    <section>
-        <div class="wrapper row">
-            <div class="content-main col-md-10" style="word-wrap: break-word; word-break: normal;">
+    <section style="border-left: 5px solid #EEE;padding: 10px 20px;margin: 0px 0px 20px;">
+        <div class="row">
+            <div class="col-md-10" style="word-wrap: break-word; word-break: normal;">
                 {% block article_content %}
                 {{ article.content|safe }}
                 {% endblock %}
-            </div>
-            <div class="content-secondary">
             </div>
         </div>
     </section>
@@ -65,7 +63,7 @@
                     {% endfor %}
                 </p>  
             </div>
-            <div class="col-md-1 col-md-offset-8">
+            <div class="col-md-2 col-md-offset-7">
                 {# <a href="{% url 'delarticle' article.id %}" title="delete"><i class="glyphicon glyphicon-trash"></i></a> #}
                 {# <a href="{% url 'updatearticle' article.id %}" title="edit"><i class="glyphicon glyphicon-pencil"></i></a> #}
                 <a href="#cmt" title="comment"><i class="glyphicon glyphicon-comment"></i></a>
@@ -89,7 +87,7 @@
         <div class="container-fluid none-padding" style="word-wrap: break-word; word-break: normal;">
             <img class="gravatar" src="{% gravatar_url comment.user_email %}">
             <p class="text-muted"><small>{{ comment.name }}</small> <small>{{ comment.submit_date|date:"F j Y" }}</small></p>
-            {{ comment.comment }}
+            <div class="well">{{ comment.comment }}</div>
         </div>
         <hr class="soften">
     {% endfor %}

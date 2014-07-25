@@ -14,7 +14,7 @@
     {% endblock %}
 </head>
 
-<body>
+<body style="background-color:#EFEEE4;">
     {% block body %}
         {% block header %}
             {# 任何每个页面都可能修改的文本区域的页面 #}
@@ -51,21 +51,24 @@
                         {% block aside %}
                             {% block tags %}{% endblock %}
                             {% block classifications %}{% endblock %}
+                            {% block administration %}{% endblock %}
+                            {% block advertisement %}{% endblock %}
+                            {% block links %}{% endblock %}
                         {% endblock %}
                     </div>
                 </div>
             </div>
         {% endblock %}
-
-        {% block footer %}
-            {# 任何每个页面都可能修改的文本区域的页脚 #}
-            <footer class="panel-footer"  role="contentinfo">
-                <div class="text-center container">
-                  <p>&copy; 2014 heyf. All Rights Reserved. </p>
-                </div>
-            </footer>
-        {% endblock %}
     </div>
+
+    {% block footer %}
+        {# 任何每个页面都可能修改的文本区域的页脚 #}
+        <footer class="panel-footer"  role="contentinfo" style="height:60px;width:100%;box-shadow:0px -1px 8px #000 inset;background-color:#262626;">
+            <div class="text-center container">
+              <p style="color: #888;padding-top: 10px;">版权所有，保留一切权利！&copy; 2014 酷寒清风. Powered by Django. All Rights Reserved. </p>
+            </div>
+        </footer>
+    {% endblock %}
 
     {% endblock %}
     <script src="/static/js/bootstrap.min.js"></script>

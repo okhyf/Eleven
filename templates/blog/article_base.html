@@ -17,9 +17,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active divider-vertical"><a href="{% url 'articlelist' %}">home</a></li>
-                    <li><a href="#">about</a></li>
-                    <li><a href="#">contact</a></li>
+                    <li class="active divider-vertical"><a href="{% url 'articlelist' %}">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -31,18 +31,18 @@
     {# <a class="btn" href="{% url 'addarticle' %}"><i class="glyphicon glyphicon-plus"></i> add new blog</a> #}<br/>
     {% block tags %}
         <div class="well">
-            <i class="glyphicon glyphicon-tags"></i>
+            <i class="glyphicon glyphicon-tags"></i><i> 标签</i><br/>
             {% for tag in tags %}
-                <span class="label"><a href="{% url 'filtrarticletag' tag.id %}">{{ tag }}</a></span>
+                <span class="label label-info"><a href="{% url 'filtrarticletag' tag.id %}" style="color:white;">{{ tag }}</a></span>
             {% endfor %}
         </div>
     {% endblock %}
 
     {% block classifications %}
         <div class="well">
-            <i class="glyphicon glyphicon-list-alt"></i>
+            <i class="glyphicon glyphicon-list-alt"></i><i> 分类</i><br/>
             {% for classification in classifications %}
-                <span class="label"><a href="{% url 'filtrarticleclass' classification.id %}">{{ classification }}</a></span>
+                <span class="label" style="font-size:13px;"><a href="{% url 'filtrarticleclass' classification.id %}">{{ classification }}</a></span>
             {% endfor %}
         </div>
     {% endblock %}

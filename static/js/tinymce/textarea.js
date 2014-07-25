@@ -11,7 +11,7 @@ tinymce.init({
         "emoticons template paste textcolor colorpicker textpattern"
     ],
     toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-    toolbar2: "print preview media | forecolor backcolor emoticons",
+    toolbar2: "print preview media | forecolor backcolor emoticons | hr pagebreak charmap table",
     image_advtab: true,
     templates: [
         {title: 'Test template 1', content: 'Test 1'},
