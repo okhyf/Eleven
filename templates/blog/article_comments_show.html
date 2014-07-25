@@ -9,7 +9,7 @@
         <div class="container-fluid none-padding" style="word-wrap: break-word; word-break: normal;">
             <img class="gravatar" src="{% gravatar_url comment.user_email %}">
             <p class="text-muted"><small>{{ comment.name }}</small> <small>{{ comment.submit_date|date:"F j Y" }}</small></p>
-            {{ comment.comment|safe }}
+            {{ comment.comment }}
         </div>
         <hr class="soften">
     {% endfor %}

@@ -12,6 +12,11 @@ class ArticleAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish_time'
     ordering = ('-publish_time',)
     filter_horizontal = ('tags',)
+    class Media:
+        js = (
+            '/static/js/tinymce/tinymce.min.js',
+            '/static/js/tinymce/textarea.js',
+        )
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Author, AuthorAdmin)
