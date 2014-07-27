@@ -3,6 +3,26 @@
 {% load gravatar %}
 {% block title %} {{ article.caption }} {% endblock %}
 {% block script %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/tinymce/tinymce.min.js"></script>
+
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        resize: "both",
+        setup : function(ed) {
+                  ed.on('blur', function(e) {
+                     tinyMCE.triggerSave();
+                  });
+            },
+        menubar : false,
+        plugins: [
+            "autolink link image code",
+            "media table charmap",
+            "emoticons textcolor colorpicker textpattern"
+        ],
+        toolbar: "styleselect | forecolor backcolor bold italic | link image emoticons table charmap"
+    });
+</script>
 <script type="text/javascript" charset="utf-8">
     function bindPostCommentHandler() {
         $('#comment_form form input.submit-preview').remove();
@@ -87,7 +107,7 @@
         <div class="container-fluid none-padding" style="word-wrap: break-word; word-break: normal;">
             <img class="gravatar" src="{% gravatar_url comment.user_email %}">
             <p class="text-muted"><small>{{ comment.name }}</small> <small>{{ comment.submit_date|date:"F j Y" }}</small></p>
-            <div class="well">{{ comment.comment }}</div>
+            <div class="well">{{ comment.comment|safe }}</div>
         </div>
         <hr class="soften">
     {% endfor %}
