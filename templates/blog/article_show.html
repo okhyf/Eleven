@@ -3,8 +3,8 @@
 {% load gravatar %}
 {% block title %} {{ article.caption }} {% endblock %}
 {% block script %}
+{{ block.super }}
 <script type="text/javascript" src="{{ STATIC_URL }}js/tinymce/tinymce.min.js"></script>
-
 <script type="text/javascript">
     tinymce.init({
         selector: "textarea",

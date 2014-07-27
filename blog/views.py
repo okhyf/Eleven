@@ -16,7 +16,7 @@ def article_list(request):
     articles = Article.objects.all()
     tags = Tag.objects.all()
     classifications = Classification.objects.all()
-    return render_to_response("article_list.html", {"articles": articles, "tags": tags, "classifications": classifications})
+    return render_to_response("article_list.html", {"articles": articles, "tags": tags, "classifications": classifications}, context_instance=RequestContext(request))
 
 def article_show(request, id=''):
     tags = Tag.objects.all()
@@ -32,14 +32,14 @@ def article_tag_filter(request, id=''):
     tag = Tag.objects.get(id=id)
     articles = tag.article_set.all()
     return render_to_response("article_tag_filter.html",
-        {"articles": articles, "tag": tag, "tags": tags})
+        {"articles": articles, "tag": tag, "tags": tags}, context_instance=RequestContext(request))
 
 def article_class_filter(request, id=''):
     classifications = Classification.objects.all()
     classification = Classification.objects.get(id=id)
     articles = classification.article_set.all()
     return render_to_response("article_class_filter.html",
-        {"articles": articles, "classification": classification, "classifications": classifications})
+        {"articles": articles, "classification": classification, "classifications": classifications}, context_instance=RequestContext(request))
 
 def article_add(request):
     if request.method == 'POST':
