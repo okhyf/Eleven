@@ -1,13 +1,14 @@
 {% extends "article_base.html" %}
-{% load comments %}
 
 {% block title %} Blog Timeline {% endblock %}
+{% block script %}
+{{ block.super }}
+{% endblock %}
 
 {% block article %}
 <article class='content-main'>
     {% for article in articles %}
-    {% get_comment_count for article as comment_count %}
-        <h4><a href="{% url 'detailarticle' article.id %}">{{ article.caption }}</a></h4>
+        <h4><a href="{% url 'detailarticle' article.id %}" >{{ article.caption }}</a></h4>
         <p class="text-muted">
             <i class="glyphicon glyphicon-list-alt"></i> <small>{{ article.classification }}</small>
             {% for tag in article.tags.all %}
@@ -21,7 +22,7 @@
             <div class="col-md-2 col-md-offset-7">
                 {# <a href="{% url 'delarticle' article.id %}" title="delete"><i class="glyphicon glyphicon-trash"></i></a> #}
                 {# <a href="{% url 'updatearticle' article.id %}" title="edit"><i class="glyphicon glyphicon-pencil"></i></a> #}
-                <a href="{% url 'detailarticle' article.id %}#cmt" title="comment"><i class="glyphicon glyphicon-comment"></i>{{ comment_count }}</a>
+                <a href="{% url 'detailarticle' article.id %}#disqus_thread" ><i class="glyphicon glyphicon-comment"></i></a>
             </div>
         </div>
     <hr>

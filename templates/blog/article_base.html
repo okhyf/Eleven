@@ -2,6 +2,15 @@
 
 {% block script %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/myjs/my_base.js"></script>
+    <script type="text/javascript">
+    var disqus_shortname = 'okhyf';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
 {% endblock %}
 {% block extra_head %}
     <style>
