@@ -1,13 +1,13 @@
 {% extends "article_base.html" %}
 
-{% block title %} classification: {{ classification }} {% endblock %}
+{% block title %} tag: {{ tag }} {% endblock %}
 {% block script %}
 {{ block.super }}
 {% endblock %}
 
 {% block article %}
 <article class='content-main'>
-    <h1>分类: {{ classification }}</h1><br/>
+    <h1>归档: {{ archive }}</h1><br/>
     {% for article in articles %}
         <h4><a href="{% url 'detailarticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}">{{ article.caption }}</a></h4>
         <p class="text-muted">

@@ -8,18 +8,44 @@
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <script src="/static/js/modernizr.js"></script>
     <script src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/myjs/my_base.js"></script>
     {% block script %}
     {% endblock %}
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+        code{
+            white-space:pre-wrap;
+        }
+        li a {
+            font-family:Microsoft YaHei;
+            font-size:15px;
+        }
+    </style>
     {% block extra_head %}
     {% endblock %}
 </head>
 
-<body style="background-color:#EFEEE4;min-height:100%;height:auto !important;height:100%;position:relative;">
+<body style="background-image:url(/static/img/background.png); background:#E7E7E7;min-height:100%;height:auto !important;height:100%;position:relative;">
     {% block body %}
         {% block header %}
             {# 任何每个页面都可能修改的文本区域的页面 #}
             {% block menu %}
             {# 你的菜单 (导航栏) 应该包含在这个区块中. 它是针对站点级的导航, 不是 每个页面专属的导航菜单. #}
+            <div class="navbar navbar-default navbar-fixed-top"  role="navigation" style="background:#EA6753;">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{% url 'articlelist' %}" style="font-family:华文行楷;font-size:38px;">浮生四季</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li id="nav-home-item"><a href="{% url 'articlelist' %}">首页</a></li>
+                            <li id="nav-about-item"><a href="https://github.com/okhyf" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             {% endblock %}
         {% endblock %}
 
@@ -28,7 +54,7 @@
             {# 这个区块用来放置页面正文内容. 任何页面正文内容都可能不一样. 它不 包含任何站点导航, 信息头, 页脚, 或其它任何属于 base 模板的东东. #}
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8" >
                         {% block article %}
                             {% block article_title %}
                                 {% comment %}
@@ -47,13 +73,18 @@
                         {% block article_menu %} {% endblock %}
                         {% block comments %} {% endblock %}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4" >
                         {% block aside %}
+                            {% block introduce %}{% endblock %}
                             {% block tags %}{% endblock %}
                             {% block classifications %}{% endblock %}
+                            {% block archives %}{% endblock %}
                             {% block administration %}{% endblock %}
                             {% block advertisement %}{% endblock %}
                             {% block links %}{% endblock %}
+                            {% block languages %}{% endblock %}
+                            {% block books %}{% endblock %}
+                            {% block others %}{% endblock %}
                         {% endblock %}
                     </div>
                 </div>
@@ -65,7 +96,7 @@
         {# 任何每个页面都可能修改的文本区域的页脚 #}
         <footer class="panel-footer"  role="contentinfo" style="position:absolute;height:60px;width:100%;box-shadow:0px -1px 8px #000 inset;background-color:#262626;bottom:0;">
             <div class="text-center container">
-              <p style="color: #888;padding-top: 10px;">版权所有，保留一切权利！&copy; 2014 酷寒清风. Powered by Django. All Rights Reserved. </p>
+              <p style="color: #888;padding-top: 10px;">&copy; 2014 酷寒清风. Powered by Django & Bootstrap. All Rights Reserved. </p>
             </div>
         </footer>
     {% endblock %}

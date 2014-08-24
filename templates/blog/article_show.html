@@ -13,7 +13,7 @@
     {% endblock %}
     <p class="text-muted">
         <i class="glyphicon glyphicon-user"></i><small> {{ article.author }}</small>
-        <i class="glyphicon glyphicon-time"></i><small> {{ article.publish_time }}</small>
+        <i class="glyphicon glyphicon-time"></i><small> {{ article.publish_time|date:"Y-m-d" }}</small>
     </p>
 
     <section style="border-left: 5px solid #EEE;padding: 10px 20px;margin: 0px 0px 20px;">
@@ -38,8 +38,8 @@
                 </p>  
             </div>
             <div class="col-md-1 col-md-offset-5">
-                {# <a href="{% url 'delarticle' article.id %}" title="delete"><i class="glyphicon glyphicon-trash"></i></a> #}
-                {# <a href="{% url 'updatearticle' article.id %}" title="edit"><i class="glyphicon glyphicon-pencil"></i></a> #}
+                {# <a href="{% url 'delarticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}" title="delete"><i class="glyphicon glyphicon-trash"></i></a> #}
+                {# <a href="{% url 'updatearticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}" title="edit"><i class="glyphicon glyphicon-pencil"></i></a> #}
                 <a href="#cmt" title="comment"><i class="glyphicon glyphicon-comment"></i></a>
             </div>
         </div>
@@ -54,14 +54,8 @@
 {% block comments %}
 <article id="cmt">
     <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_shortname = 'okhyf';
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="{{ article.id }}" data-title="{{ article.caption }}" data-url="heyufeng.me{% url 'detailarticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}"></div>
+    <!-- 多说评论框 end -->
 </article>
 {% endblock %}

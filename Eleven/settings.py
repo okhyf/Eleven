@@ -94,3 +94,7 @@ STATICFILES_DIRS = (
 )
 
 SITE_ID = 1
+
+LOGIN_URL = '/admin/'
+
+PAGE_SIZE = 10
