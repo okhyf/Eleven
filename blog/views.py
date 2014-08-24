@@ -25,8 +25,11 @@ def article_list(request, page='1'):
     archives = Archive.objects.all()
     archives_count_map = {x:len(x.article_set.all()) for x in archives}
     articles = Article.objects.all().filter(id__gt = id_beg).filter( id__lte= id_end)
-    max_id = Article.objects.all()[0].id
-    pages = str((max_id+settings.PAGE_SIZE-1)/settings.PAGE_SIZE)
+    if len(Article.objects.all()) > 0:
+        max_id = Article.objects.all()[0].id
+        pages = str((max_id+settings.PAGE_SIZE-1)/settings.PAGE_SIZE)
+    else:
+        pages = 1
     return render_to_response("article_list.html", {"articles": articles, "tags": tags, "classifications": classifications, "archives_count_map": archives_count_map, "page": page, "pages": pages}, context_instance=RequestContext(request))
 
 def article_show(request, year='', month='', day='', id=''):
