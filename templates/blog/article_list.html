@@ -9,11 +9,33 @@
         })
     </script>
 {% endblock %}
+{% block extra_head %}
+{{ block.super }}
+<style>
+.article_item
+{
+    border-left-style:solid;
+    border-left-color:#CCCCCC;
+    border-width: 10px;
+    transition: border 1s;
+    -moz-transition: border 1s;	/* Firefox 4 */
+    -webkit-transition: border 1s;	/* Safari 和 Chrome */
+    -o-transition: border 1s;	/* Opera */
+}
+.article_item:hover
+{
+    border-left-style:solid;
+    border-left-color:#EA6753;
+    border-width: 10px;
+}
+</style>
+{% endblock %}
 
 {% block article %}
-<article class='content-main' style="box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.2);padding: 30px;">
+<article class='content-main' style="box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.2);padding: 20px 5px 5px 0;">
     {% for article in articles %}
-        <h4><a href="{% url 'detailarticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}" >{{ article.caption }}</a></h4>
+    <div class="article_item">
+        <h4 style="margin-top:-20px"><a href="{% url 'detailarticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}" >{{ article.caption }}</a></h4>
         <p class="text-muted">
             <i class="glyphicon glyphicon-list-alt"></i> <small>{{ article.classification }}</small>
             {% for tag in article.tags.all %}
@@ -31,7 +53,8 @@
                 <i class="ds-thread-count glyphicon glyphicon-comment" data-thread-key="{{ article.id }}"></i></a>
             </div>
         </div>
-    <hr>
+    <hr style="border-style:solid;border-color:#CCCCCC;border-width: 2px;">
+    </div>
     {% endfor %}
 </article>
 
