@@ -33,7 +33,7 @@
 {% endblock %}
 
 {% block article %}
-<article class='content-main' style="box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.2);padding: 20px 5px 0x 0;">
+<article class='content-main' style="box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.2);padding: 20px 5px 0x 0;margin-top:40px;">
     {% for article in articles %}
     <div class="article_item">
         <h4 style="margin-top:-20px; padding-top:10px"><a href="{% url 'detailarticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}" >{{ article.caption }}</a></h4>
