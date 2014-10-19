@@ -17,7 +17,7 @@
               $("#article_text").html(result);
           };
           var parseAndRender = function () {
-              parsed = reader.parse($("#article_text").text());
+              parsed = reader.parse($("#article_text").html());
               render();
           };
 
