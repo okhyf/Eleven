@@ -14,6 +14,9 @@
         })();
     </script>
     <!-- 多说公共JS代码 end -->
+
+    <!-- MarkDown -->
+    <script type="text/javascript" src="{{ STATIC_URL }}js/stmd.js"></script>
 {% endblock %}
 {% block extra_head %}
 {% endblock %}
@@ -28,12 +31,12 @@
             <p>
                 <strong style="padding:30px">贺于峰</strong><br/>
                 网名:<strong>酷寒清风</strong><br/>
-                洋名:<strong>Ian He</strong><br/>
+                E名:<strong>Ian He</strong><br/>
                 职业:程序员<br/>
                 目前就职于厦门亿联网络技术股份有限公司杭州分公司, 做音视频引擎开发。
             </p>
             <p>
-                虽然工作主要开发语言是C++, 但是对函数式编程也有着浓厚的兴趣, 爱好研究各类编程语言与编程思想, 关注技术前沿, 目标是成为Full Stack Developer.
+                爱好研究各类编程语言与编程范式, 关注技术前沿。
             </p>
           </div>
           <table class="table">
@@ -73,4 +76,16 @@
             <i class="glyphicon glyphicon-link"></i><i> 链接</i><br/>
         </div>
     {% endblock %}
+
+    {%if user.is_authenticated%}
+    {% block administration %}
+        <div class="well" style="box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.4);">
+            <i class="glyphicon glyphicon-user"></i><i> 管理</i><br/>
+            <ul>
+              <li><a href="{% url 'home' %}admin">登陆后台</a></li>
+              <li><a href="{% url 'addarticle' %}">写文章</a></li>
+            </ul>
+        </div>
+    {% endblock %}
+    {%endif%}
 {% endblock %}

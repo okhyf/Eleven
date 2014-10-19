@@ -1,6 +1,32 @@
 {% extends "article_base.html" %}
 
 {% block title %} 发布文字 {% endblock %}
+{% block script %}
+{{ block.super }}
+<script type="text/javascript">
+        var writer = new stmd.HtmlRenderer();
+        var reader = new stmd.DocParser();
+
+        $(document).ready(function() {
+          var parsed;
+          var render = function() {
+              if (parsed === undefined) {
+                return;
+              }
+              var result = writer.renderBlock(parsed);
+              $("#preview").html(result);
+          };
+          var parseAndRender = function () {
+              parsed = reader.parse($("#id_content").val());
+              render();
+          };
+
+          $("#preview-button").bind('click', parseAndRender);
+          // $("#id_content").bind('keyup paste cut mouseup', parseAndRender);
+          // $(".option").change(render);
+        });
+  </script>
+{% endblock %}
 
 
 {% block article %}
@@ -43,7 +69,28 @@
         <input type="text" colum class="form-control" id="id_classification" name="classification_name" placeholder="Classification" value="{{ article.classification }}">
     </div>
     <br/>
-    <button type="submit" class="btn btn-primary">save and add</button>
-    <br/>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="preview-button">Preview</button>
+     <br/>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Preview</h4>
+          </div>
+          <div class="modal-body">
+            <div id="preview" class="tab-pane active">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </form>
 {% endblock %}

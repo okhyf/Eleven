@@ -15,6 +15,7 @@
             {% for tag in article.tags.all %}
                 <i class="glyphicon glyphicon-tags"></i> <small>{{ tag }}</small>
             {% endfor %}
+            <i>, {{ article.click_times }} visits</i>
         </p>
         <div class="row">
             <div class="col-md-3">

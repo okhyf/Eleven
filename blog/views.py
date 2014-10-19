@@ -18,11 +18,16 @@ import Eleven.settings as settings
 def article_list(request, page='1'):
     tags = Tag.objects.all()
     classifications = Classification.objects.all()
+    archives = Archive.objects.all()
+    id_end = Article.objects.get_query_set().count()
+    print id_end
     if page=='0':
         page = '1'
-    id_beg = settings.PAGE_SIZE*(int(page)-1)
-    id_end = id_beg + settings.PAGE_SIZE
-    archives = Archive.objects.all()
+    id_end = id_end - settings.PAGE_SIZE*(int(page) - 1)
+    id_beg = id_end - settings.PAGE_SIZE
+    if id_beg < 0:
+        id_beg = 0
+    print id_beg, id_end
     archives_count_map = {x:len(x.article_set.all()) for x in archives}
     articles = Article.objects.all().filter(id__gt = id_beg).filter( id__lte= id_end)
     if len(Article.objects.all()) > 0:
@@ -41,6 +46,8 @@ def article_show(request, year='', month='', day='', id=''):
         article = Article.objects.get(id=id)
         if [year, month, day] != str(article.publish_time).split()[0].split('-'):
             raise Article.DoesNotExist
+        article.click_times += 1
+        article.save()
     except Article.DoesNotExist:
         raise Http404
     return render_to_response("article_show.html", {"article": article, "tags": tags, "classifications": classifications, "archives_count_map": archives_count_map}, context_instance=RequestContext(request))

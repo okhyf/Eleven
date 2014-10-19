@@ -3,6 +3,27 @@
 {% block title %} {{ article.caption }} {% endblock %}
 {% block script %}
 {{ block.super }}
+<script type="text/javascript">
+        var writer = new stmd.HtmlRenderer();
+        var reader = new stmd.DocParser();
+
+        $(document).ready(function() {
+          var parsed;
+          var render = function() {
+              if (parsed === undefined) {
+                return;
+              }
+              var result = writer.renderBlock(parsed);
+              $("#article_text").html(result);
+          };
+          var parseAndRender = function () {
+              parsed = reader.parse($("#article_text").text());
+              render();
+          };
+
+          parseAndRender();
+        });
+  </script>
 {% endblock %}
 
 {% block article %}
@@ -14,13 +35,14 @@
     <p class="text-muted">
         <i class="glyphicon glyphicon-user"></i><small> {{ article.author }}</small>
         <i class="glyphicon glyphicon-time"></i><small> {{ article.publish_time|date:"Y-m-d" }}</small>
+        <i>, {{ article.click_times }} visits</i>
     </p>
 
     <section style="border-left: 5px solid #EEE;padding: 10px 20px;margin: 0px 0px 20px;">
         <div class="row">
-            <div class="col-md-10" style="word-wrap: break-word; word-break: normal;">
+            <div class="col-md-10" id="article_text" style="word-wrap: break-word; word-break: normal;">
                 {% block article_content %}
-                {{ article.content|safe }}
+{{ article.content|safe }}
                 {% endblock %}
             </div>
         </div>
@@ -37,10 +59,13 @@
                     {% endfor %}
                 </p>  
             </div>
-            <div class="col-md-1 col-md-offset-5">
+            <div class="col-md-2 col-md-offset-4">
                 {# <a href="{% url 'delarticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}" title="delete"><i class="glyphicon glyphicon-trash"></i></a> #}
-                {# <a href="{% url 'updatearticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}" title="edit"><i class="glyphicon glyphicon-pencil"></i></a> #}
-                <a href="#cmt" title="comment"><i class="glyphicon glyphicon-comment"></i></a>
+                {%if user.is_authenticated%}
+                <a class="pull-right" href="{% url 'updatearticle' year=article.publish_time|date:"Y" month=article.publish_time|date:"m" day=article.publish_time|date:"d" id=article.id %}" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                <div class="pull-right">&nbsp;&nbsp;</div>
+                {%endif%}
+                <a class="pull-right" href="#cmt" title="comment"><i class="glyphicon glyphicon-comment"></i></a>
             </div>
         </div>
         <hr>
